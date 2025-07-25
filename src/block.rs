@@ -67,4 +67,11 @@ impl Block {
         let result = hasher.finalize();
         format!("{:x}", result)
     }
+
+    pub fn display_pretty(&self) -> String {
+        format!(
+            "📦 Block #{}\nHash:      {}\nPrev Hash: {}\nData:      {}\nNonce:     {}\n----------------------------",
+            self.index, self.hash, self.previous_hash, self.data, self.nonce
+        )
+    }
 }

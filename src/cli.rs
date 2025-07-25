@@ -28,7 +28,7 @@ pub fn run() {
         }
         Commands::Show => {
             for block in &blockchain.blocks {
-                println!("{:#?}", block);
+                println!("{}", block.display_pretty());
             }
         }
         Commands::Validate => {
