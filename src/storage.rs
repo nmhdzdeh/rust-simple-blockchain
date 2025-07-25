@@ -18,7 +18,13 @@ pub fn load_blockchain() -> Blockchain {
     if Path::new(FILE_PATH).exists() {
         let file = File::open(FILE_PATH).expect("Failed to open blockchain.json");
         let reader = BufReader::new(file);
-        serde_json::from_reader(reader).unwrap_or_else(|_| Blockchain::new())
+        let blockchain:Blockchain= serde_json::from_reader(reader).unwrap_or_else(|_| Blockchain::new());
+
+        if blockchain.is_valid(){
+            blockchain
+        }else{
+            panic!("Blockchain data is invalid! Halting.");
+        }
     } else {
         Blockchain::new()
     }

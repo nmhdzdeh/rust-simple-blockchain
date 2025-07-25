@@ -44,6 +44,10 @@ impl Blockchain {
                 return false;
             }
 
+            if !current_block.hash.starts_with(&"0".repeat(self.difficulty)) {
+                return false;
+            }
+
             if current_block.previous_hash != previous_block.hash {
                 return false;
             }
