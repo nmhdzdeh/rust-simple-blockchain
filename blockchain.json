@@ -1,0 +1,29 @@
+{
+  "blocks": [
+    {
+      "index": 0,
+      "timestamp": 1753456987318,
+      "data": "Genesis Block",
+      "previous_hash": "0",
+      "hash": "",
+      "nonce": 0
+    },
+    {
+      "index": 1,
+      "timestamp": 1753456987318,
+      "data": "My first block data",
+      "previous_hash": "",
+      "hash": "00000cf4fd8d24d9ba4757190ab594bf7ae64f6195ddc044e9e6795d3a235269",
+      "nonce": 108570
+    },
+    {
+      "index": 2,
+      "timestamp": 1753457011191,
+      "data": "My first block data",
+      "previous_hash": "00000cf4fd8d24d9ba4757190ab594bf7ae64f6195ddc044e9e6795d3a235269",
+      "hash": "0000c5f0d54b71ef9aec67086de633c52c00bf3141e6b91219e51c1e8ae3504b",
+      "nonce": 8092
+    }
+  ],
+  "difficulty": 4
+}

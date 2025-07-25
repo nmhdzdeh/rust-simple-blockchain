@@ -1,5 +1,5 @@
 use std::fs::File;
-use std::io::Read;
+use std::io::{BufReader, Write};
 use std::path::Path;
 
 use crate::blockchain::Blockchain;
@@ -8,18 +8,18 @@ use serde_json;
 const FILE_PATH: &str = "blockchain.json";
 
 pub fn save_blockchain(blockchain: &Blockchain) {
-    if let Ok(json) = serde_json::to_string_pretty(blockchain) {
-        let _ = std::fs::write(FILE_PATH, json);
-    }
+    let json = serde_json::to_string_pretty(blockchain).expect("Failed to serialize blockchain");
+    let mut file = File::create(FILE_PATH).expect("Failed to create blockchain.json");
+    file.write_all(json.as_bytes())
+        .expect("Failed to write blockchain to file");
 }
 
-pub fn load_blockchain() -> Option<Blockchain> {
+pub fn load_blockchain() -> Blockchain {
     if Path::new(FILE_PATH).exists() {
-        let mut file = File::open(FILE_PATH).ok()?;
-        let mut content = String::new();
-        file.read_to_string(&mut content).ok()?;
-        serde_json::from_str(&content).ok()
+        let file = File::open(FILE_PATH).expect("Failed to open blockchain.json");
+        let reader = BufReader::new(file);
+        serde_json::from_reader(reader).unwrap_or_else(|_| Blockchain::new())
     } else {
-        None
+        Blockchain::new()
     }
 }
