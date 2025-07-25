@@ -4,6 +4,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Deserialize, Debug, Clone)]
 pub struct Blockchain {
     pub blocks: Vec<Block>,
+    pub difficulty: usize,
 }
 
 impl Blockchain {
@@ -11,12 +12,18 @@ impl Blockchain {
         let genesis_block = Block::new(0, "Genesis Block".to_string(), "0".to_string());
         Blockchain {
             blocks: vec![genesis_block],
+            difficulty: 4,
         }
     }
 
     pub fn add_block(&mut self, data: String) {
         let last_block = self.blocks.last().expect("Blockchain is empty");
-        let new_block = Block::new(last_block.index + 1, data, last_block.hash.clone());
+        let new_block = Block::mine_block(
+            last_block.index + 1,
+            data,
+            last_block.hash.clone(),
+            self.difficulty,
+        );
         self.blocks.push(new_block);
     }
 
@@ -30,6 +37,7 @@ impl Blockchain {
                 current_block.timestamp,
                 &current_block.data,
                 &current_block.previous_hash,
+                current_block.nonce,
             );
 
             if current_block.hash != recalculated_hash {
